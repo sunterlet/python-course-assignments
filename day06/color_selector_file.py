@@ -1,9 +1,8 @@
-#!/usr/bin/env python3
 import sys
 
 # Check for correct usage
 if len(sys.argv) != 2:
-    print(f"Usage: python {sys.argv[0]} <colors_file>")
+    print("Please enter a valid txt file")
     sys.exit(1)
 
 # Load colors
