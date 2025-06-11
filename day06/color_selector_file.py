@@ -1,30 +1,37 @@
 import sys
 
-# Check for correct usage
-if len(sys.argv) != 2:
-    print("Please enter a valid txt file")
-    sys.exit(1)
+def abort(msg: str, code: int = 1) -> None:
+    print(msg)
+    sys.exit(code)
 
-# Load colors
+# 1. Check for correct usage
+if len(sys.argv) != 2:
+    abort("Usage: python color_select.py <colors.txt>")
+
+# 2. Load colors from file
 filename = sys.argv[1]
 try:
-    colors = [line.strip() for line in open(filename, encoding='utf-8') if line.strip()]
+    colors = [line.strip() for line in open(filename, encoding="utf-8") if line.strip()]
 except FileNotFoundError:
-    print(f"Error: File '{filename}' not found.")
-    sys.exit(1)
+    abort(f"Error: File '{filename}' not found.")
 
 if not colors:
-    print("Error: No colors found in file.")
-    sys.exit(1)
+    abort("Error: No colors found in file.")
 
-# Show available options
-print("Available colors:", ", ".join(colors))
+# 3. Show available options with numbers
+print("Available colors:")
+for idx, color in enumerate(colors, start=1):
+    print(f"{idx}. {color}")
 
-# Get and validate user input (case-insensitive)
-choice = input("Enter a color: ").strip().lower()
-mapping = {c.lower(): c for c in colors}
+# 4. Get and validate user input (numeric)
+choice = input("Enter the number of your color choice: ").strip()
 
-if choice in mapping:
-    print(f"You selected: {mapping[choice]}")
+if not choice.isdigit():
+    abort(f"Error: '{choice}' is not a valid positive integer.")
+
+index = int(choice) - 1  # convert to 0-based
+
+if 0 <= index < len(colors):
+    print(f"You selected: {colors[index]}")
 else:
-    print(f"Error: '{choice}' is not a valid color.")
+    abort(f"Error: {choice} is out of range (1-{len(colors)}).")
