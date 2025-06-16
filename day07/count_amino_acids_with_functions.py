@@ -36,7 +36,7 @@ def print_counts(counts):
 # Main script logic
 def main():
     if len(sys.argv) != 2:
-    	print("Input a valid FASTA file")
+        print("Input a valid FASTA file")
         sys.exit(1)
 
     filename = sys.argv[1]
