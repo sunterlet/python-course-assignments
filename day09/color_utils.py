@@ -7,13 +7,16 @@ def load_colors(filename):
         
     Returns:
         list: List of color strings
+        
+    Raises:
+        FileNotFoundError: If the file doesn't exist
+        ValueError: If the file is empty or contains no valid colors
     """
     # Open the file
     try:
         file = open(filename, 'r', encoding='utf-8')
-    except:
-        print(f"Error: File '{filename}' not found.")
-        return []
+    except FileNotFoundError:
+        raise FileNotFoundError(f"File '{filename}' not found.")
     
     # Read all lines
     colors = []
@@ -29,8 +32,7 @@ def load_colors(filename):
     
     # Check if we found any colors
     if len(colors) == 0:
-        print("Error: No colors found in file.")
-        return []
+        raise ValueError("No colors found in file.")
     
     return colors
 
